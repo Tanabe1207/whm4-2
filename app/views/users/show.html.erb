@@ -64,14 +64,12 @@
         <div class="languages-container">
           <li class="talkable-languages-container">
             <p>話したい言語　</p>　
-            <% @user_my_page.user_language_levels.each do |language| %>
+            <% @user_my_page.languages.each do |language| %>
               <%= language.language %>
-            <% end %>
           </li>
           <li class="talkable-languages-level-container">
             <p>level　</p>
-            <% @user_my_page.user_language_levels.each do |level| %>
-            <%= level.level %>
+            <%= language.level %>
             <% end %>
           </li>
         </div>

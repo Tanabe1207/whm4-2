@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(user_params)#strong parameterに定義されている
+
 #再度@userにUserテーブルを構築。その際引数をuser_paramsメソッドにすることで、
 #viewで格納したparamsの値が入ったテーブルを引数とすることができる。
 #routes.rbで、POSTメソッド（HTTPメソッドの一つ）POST	users	users#createを指示しているから、
@@ -18,6 +19,9 @@ class UsersController < ApplicationController
     # user.user_language_levels = [UserLanguageLevel.new(user:user,language_id:up[:language_id],level:up[:level])]
     # debugger
     if @user.save
+      @lang = Language.new(languages_params)
+      @lang.user_id = User.last.id
+      @lang.save
       redirect_to root_path, notice:'登録が完了しました'#saveできたらroot pathに飛ぶの意
     else
       flash.now[:alert]="登録に失敗しました"#noticeとalertは自動的にRailsに格納されているflashという変数の中に入ります。
@@ -65,8 +69,11 @@ class UsersController < ApplicationController
   #この作業がuser_paramsメソッド。
     def user_params
       params.require(:user).permit(:nickname, :mail, :password, :password_confirmation, :my_image,
-        :gender, :birthday, :nationality, :hobby, :language, :level, :introduce_yourself,)
+        :gender, :birthday, :nationality, :hobby, :introduce_yourself,)
          # languages_attributes: [:id, :language, :level, :_destroy])
+    end
+    def languages_params
+      params.require(:user).permit( :language, :level)
     end
     #  languages_attributesの前にコロンいらない？
 end

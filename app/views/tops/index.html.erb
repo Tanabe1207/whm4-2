@@ -62,14 +62,12 @@
           <div class="talkable-languages-container">
             <li class="talkable-languages">
               話したい言語　
-              <% offer.user.user_language_levels.each do |language| %>
+              <% offer.user.languages.each do |language| %>
                 <%= language.language %>
-              <% end %>
             </li>
             <li class="talkable-languages-level">
               level
-              <% offer.user.user_language_levels.each do |level| %>
-              <%= level.level %>
+                <%= language.level %>
               <% end %>
             </li>
           </div>
